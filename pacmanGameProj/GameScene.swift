@@ -33,9 +33,27 @@ class GameScene: SKScene {
         
         let tileSize = map.tileSize
         
-        let divW = CGFloat (map.numberOfColumns) / 2.0 * tileSize.width
+        let divW = CGFloat (map.numberOfColumns) / 2.0 * tileSize.width // half of the width
+        let divH = CGFloat (map.numberOfRows) / 2.0 * tileSize.height // half of the height
         
-        print(divW)
+        for column in 0..<map.numberOfColumns { //iterate through every column
+            
+            for row in 0..<map.numberOfRows { //iterate through every row
+            //together they iterate every spot on the grid
+                
+                if let paintTile = map.tileDefinition(atColumn: column, row: row) {
+                    // tile with painting exist
+                } else {
+                    //tile is empty character can move within these tiles
+                    
+                    let locY = CGFloat(row) * tileSize.height - divW + (tileSize.width / 2)
+                    let locX = CGFloat(column) * tileSize.width - divH + (tileSize.height / 2)
+                    print("NO TILE AT \(locX), \(locY)")
+                }
+                
+            }
+            
+        }
         
     }
     
