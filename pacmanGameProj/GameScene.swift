@@ -33,6 +33,7 @@ class GameScene: SKScene {
         
         if (self.childNode(withName: "pacman") != nil) {
             thePacMan = self.childNode(withName: "pacman") as! SKSpriteNode
+            thePacMan.run(actionChew, withKey: "Chew")
         }
         
     }
