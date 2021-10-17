@@ -48,7 +48,13 @@ class GameScene: SKScene {
                     
                     let locY = CGFloat(row) * tileSize.height - divW + (tileSize.width / 2)
                     let locX = CGFloat(column) * tileSize.width - divH + (tileSize.height / 2)
-                    print("NO TILE AT \(locX), \(locY)")
+                    
+                    let pointNew = CGPoint(x: locX, y: locY)
+                    let convPointNew:CGPoint = self.convert(pointNew, from: map) //converts empty spots in map
+                    
+                    emptyLocArray.append(convPointNew)
+                    
+                    
                 }
                 
             }
