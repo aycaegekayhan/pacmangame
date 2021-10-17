@@ -14,7 +14,9 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        
+        for node in self.children { //iterate through all the children in the scene
+            
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
