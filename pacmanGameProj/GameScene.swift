@@ -10,6 +10,9 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var actionChew:SKAction = SKAction(named: "Chew")! //(!) is to check that if action exist
+    var thePacMan:SKSpriteNode = SKSpriteNode()
+    
     var emptyLocArray = [CGPoint]() //array stores where character can move in maze
     
     override func didMove(to view: SKView) {
@@ -27,6 +30,11 @@ class GameScene: SKScene {
             }
             
         }
+        
+        if (self.childNode(withName: "pacman") != nil) {
+            thePacMan = self.childNode(withName: "pacman") as! SKSpriteNode
+        }
+        
     }
     
     func structSceneMap(map:SKTileMapNode) {
