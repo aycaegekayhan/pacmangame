@@ -8,14 +8,22 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var actionChew:SKAction = SKAction(named: "Chew")! //(!) is to check that if action exist
     var thePacMan:SKSpriteNode = SKSpriteNode()
+    var theStrawberry:SKSpriteNode = SKSpriteNode()
+    var theApple:SKSpriteNode = SKSpriteNode()
     
     var emptyLocArray = [CGPoint]() //array stores where character can move in maze
     
     override func didMove(to view: SKView) {
+        
+        theStrawberry = (self.childNode(withName: "strawberry") as! SKSpriteNode)
+        thePacMan = (self.childNode(withName: "pacman") as! SKSpriteNode)
+        theApple = (self.childNode(withName: "apple") as! SKSpriteNode)
+        
+        
         
         for node in self.children { //iterate through all the children in the scene
             
@@ -24,12 +32,19 @@ class GameScene: SKScene {
                 if let theOut:SKTileMapNode = node as? SKTileMapNode { //confirms that node is sktilemap node
                     
                     structSceneMap(map:theOut)
-                    
+                    theOut.physicsBody?.collisionBitMask = 1
+                    theOut.physicsBody?.categoryBitMask = 2
+                    theOut.physicsBody?.contactTestBitMask = 0
+                    theOut.physicsBody?.restitution = 1
+                    theOut.physicsBody?.allowsRotation = true
+                    theOut.physicsBody?.friction = 1
                 }
                 
             }
             
         }
+        
+        self.physicsWorld.contactDelegate = self
         
         if (self.childNode(withName: "pacman") != nil) {
             thePacMan = self.childNode(withName: "pacman") as! SKSpriteNode
@@ -68,6 +83,17 @@ class GameScene: SKScene {
                 
             }
             
+        }
+        
+    }
+    
+    func didBegin(_ collide:SKPhysicsContact){
+        print("GOT INTO FUNCTION")
+        
+        if (collide.bodyA.node?.name == "strawberry" || collide.bodyA.node?.name == "apple" ){
+            collide.bodyA.node?.removeFromParent()
+        } else if(collide.bodyB.node?.name == "strawberry" || collide.bodyB.node?.name == "apple" ){
+            collide.bodyB.node?.removeFromParent()
         }
         
     }
